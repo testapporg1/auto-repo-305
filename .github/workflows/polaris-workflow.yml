@@ -1,22 +1,12 @@
-name: Polaris scan
-"on":
+name: Polaris Security Scan
+on:
   push:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
+    branches: main,master,develop,stage,release
   pull_request:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
+    branches: main,master,develop,stage,release
   workflow_dispatch: {}
 jobs:
-  scan:
+  polaris:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
@@ -27,7 +17,7 @@ jobs:
         with:
           polaris_server_url: ${{ vars.POLARIS_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_assessment_types: sca
+          polaris_assessment_types: sast,sca
           polaris_waitForScan: true
           mark_build_status: failure
           include_diagnostics: false
